@@ -12,8 +12,6 @@ async function main() {
     // get the data asynchronously
     const data = await getData();
 
-    createTweet()
-
     data['forecasts'].forEach(async forecast => {
 
         const comparisonResult = await compareNewForecastToDB(forecast);
@@ -24,6 +22,9 @@ async function main() {
             console.log('forecast added to raw db')
             addStructuredDataToDB(forecast);
             console.log('forecast added to structured db')
+
+            //do the tweeting
+            createTweet(forecast)
         }
         else {
             //already in the database

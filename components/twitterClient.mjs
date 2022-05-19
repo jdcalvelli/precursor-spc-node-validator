@@ -10,9 +10,15 @@ const client = new TwitterApi({
 
 const rwClient = client.readWrite
 
-async function createTweet() {
+async function createTweet(newForecast) {
     try {
-        await rwClient.v2.tweet('disregard this tweet i am trying to learn the twitter api :D')
+        await rwClient.v2.tweet(`
+        ID: ${newForecast.forecast_id +'.'+newForecast.update_id}
+        \nLOC: ${newForecast.epicenter_lat}, ${newForecast.epicenter_long} (+/-${newForecast.epicenter_confidence})
+        \nMAG: ${newForecast.magnitude} (+/- ${newForecast.magnitude_confidence})
+        \nWHEN: ${newForecast.event_time} (+/- ${newForecast.time_confidence})`)
+
+        console.log('tweet fired')
     } catch (error) {
         console.log('ERROR: Unable to Tweet')
         console.log(error)
