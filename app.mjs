@@ -45,4 +45,3 @@ main()
 // put this in a cron job to run every so often to collect information from api endpoint
 
 // doesn't have an external log like the python yet
-// doesnt check if it's an update or a new forecast yet for purpose of tweeting

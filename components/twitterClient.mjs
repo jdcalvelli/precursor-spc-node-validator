@@ -1,6 +1,8 @@
 import { TwitterApi } from "twitter-api-v2";
 import 'dotenv/config';
 
+import { prisma } from "./prismaInit.mjs";
+
 const client = new TwitterApi({
     appKey: process.env.APP_KEY,
     appSecret: process.env.APP_SECRET,
@@ -12,7 +14,10 @@ const rwClient = client.readWrite
 
 async function createTweet(newForecast) {
     try {
-        await rwClient.v2.tweet(`ID: ${newForecast.forecast_id +'.'+newForecast.update_id}\nLOC: ${newForecast.epicenter_lat}, ${newForecast.epicenter_long} (+/-${newForecast.epicenter_confidence})\nMAG: ${newForecast.magnitude} (+/- ${newForecast.magnitude_confidence})\nWHEN: ${newForecast.event_time} (+/- ${newForecast.time_confidence})`)
+
+        //want to check if forecast id is already in the database, in which case it's an update, otherwise it's a new forecast
+
+        await rwClient.v2.tweet(`${checkIfUpdate(newForecast).length > 1 ? 'Update Forecast' : 'New Forecast'}\nID: ${newForecast.forecast_id + '.' + newForecast.update_id}\nLOC: ${newForecast.epicenter_lat}, ${newForecast.epicenter_long} (+/-${newForecast.epicenter_confidence})\nMAG: ${newForecast.magnitude} (+/- ${newForecast.magnitude_confidence})\nWHEN: ${newForecast.event_time} (+/- ${newForecast.time_confidence})`)
 
         console.log('tweet fired')
     } catch (error) {
@@ -22,3 +27,15 @@ async function createTweet(newForecast) {
 }
 
 export { createTweet }
+
+// helper function strictly for writing correct twitter words
+
+async function checkIfUpdate(newForecast) {
+    //query db to find all places where forecast_id is present
+    const existingForecasts = prisma.structured_test.findMany({
+        where: {
+            forecast_id: newForecast.forecast_id
+        }
+    })
+    return existingForecasts;
+}
