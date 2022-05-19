@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model raw_test {
+  test_id     Int    @id @default(autoincrement())
+  raw_json    String
+  received_at String
+}
+
+model structured_test {
+  forecasted_at                  String
+  forecast_id                    String
+  update_id                      String
+  epicenter_lat                  String
+  epicenter_long                 String
+  epicenter_confidence           String
+  precursor_magnitude            String
+  precursor_magnitude_confidence String
+  magnitude                      String
+  magnitude_confidence           String
+  event_time                     String
+  time_confidence                String
+
+  @@id([forecast_id, update_id])
+}
