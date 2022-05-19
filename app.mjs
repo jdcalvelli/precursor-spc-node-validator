@@ -4,11 +4,15 @@ import { compareNewForecastToDB } from './components/compareNewForecastToDB.mjs'
 import { addRawDataToDB } from './components/addRawDataToDB.mjs';
 import { addStructuredDataToDB } from './components/addStructuredDataToDB.mjs'
 
+import { createTweet } from './components/twitterClient.mjs'
+
 
 //main execution
 async function main() {
     // get the data asynchronously
     const data = await getData();
+
+    createTweet()
 
     data['forecasts'].forEach(async forecast => {
 
@@ -38,3 +42,4 @@ main()
     })
 
 // put this in a cron job to run every so often to collect information from api endpoint
+// doesn't have an external log like the python yet
