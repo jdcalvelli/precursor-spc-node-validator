@@ -31,13 +31,11 @@ async function createTweetMap(lat, lng, forecastID, updateID) {
         //have to wait to let the tiles load
         await page.waitForTimeout(1500)
         
-        await page.screenshot({ path: `../mapImages/${forecastID + "-" + updateID}.png` })
+        //this has to be ./mapImages bc the path is based on where this gets called evidently, ie in the main
+        await page.screenshot({ path: `./mapImages/${forecastID + "-" + updateID}.png` })
 
         await browser.close()
 
 }
 
-createTweetMap(41.795, -87.593, 1, 1)
-createTweetMap(40.914, -73.808, 2, 1)
-
-//export { createTweetMap }
+export { createTweetMap }

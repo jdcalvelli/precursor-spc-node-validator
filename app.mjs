@@ -5,6 +5,7 @@ import { addRawDataToDB } from './components/addRawDataToDB.mjs';
 import { addStructuredDataToDB } from './components/addStructuredDataToDB.mjs'
 
 import { createTweet } from './components/twitterClient.mjs'
+import { createTweetMap } from './components/createTweetMap.mjs'
 
 
 //main execution
@@ -23,8 +24,12 @@ async function main() {
             addStructuredDataToDB(forecast);
             console.log('forecast added to structured db')
 
+            //create the map
+            createTweetMap(forecast.epicenter_lat, forecast.epicenter_long, forecast.forecast_id, forecast.update_id)
+            console.log('forecast map tweet created')
+
             //do the tweeting
-            createTweet(forecast)
+            //createTweet(forecast)
         }
         else {
             //already in the database
