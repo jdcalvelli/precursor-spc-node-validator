@@ -20,7 +20,7 @@ async function createTweetMap(lat, lng, forecastID, updateID) {
             document.querySelector('body').appendChild(mapDiv)
 
             //actually utilizing leaflet
-            let map = L.map('map').setView([lat, lng], 6);
+            let map = L.map('map', { zoomControl: false }).setView([lat, lng], 6);
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(map);
