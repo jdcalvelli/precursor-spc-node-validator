@@ -1,11 +1,11 @@
-import { prisma } from './components/prismaInit.mjs';
-import { getData } from './components/getData.mjs';
-import { compareNewForecastToDB } from './components/compareNewForecastToDB.mjs';
-import { addRawDataToDB } from './components/addRawDataToDB.mjs';
-import { addStructuredDataToDB } from './components/addStructuredDataToDB.mjs'
+import { prisma } from './components/db/prismaInit.mjs';
+import { getData } from './components/data/getData.mjs';
+import { compareNewForecastToDB } from './components/db/compareNewForecastToDB.mjs';
+import { addRawDataToDB } from './components/db/addRawDataToDB.mjs';
+import { addStructuredDataToDB } from './components/db/addStructuredDataToDB.mjs'
 
-import { createTweet } from './components/twitterClient.mjs'
-import { createTweetMap } from './components/createTweetMap.mjs'
+import { createTweet } from './components/tweeting/twitterClient.mjs'
+import { createTweetMap } from './components/tweeting/createTweetMap.mjs'
 
 
 //main execution

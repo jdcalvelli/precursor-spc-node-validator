@@ -1,7 +1,7 @@
 import { TwitterApi } from "twitter-api-v2";
 import 'dotenv/config';
 
-import { prisma } from "./prismaInit.mjs";
+import { prisma } from "../db/prismaInit.mjs";
 
 const client = new TwitterApi({
     appKey: process.env.APP_KEY,
