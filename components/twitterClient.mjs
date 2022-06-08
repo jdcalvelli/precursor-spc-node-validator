@@ -15,11 +15,16 @@ const rwClient = client.readWrite
 async function createTweet(newForecast) {
     try {
 
+        const mediaId = await client.v1.uploadMedia(`./mapImages/${newForecast.forecast_id + '-' + newForecast.update_id}.png`);
+
         //want to check if forecast id is already in the database, in which case it's an update, otherwise it's a new forecast
 
-        await rwClient.v2.tweet(`${checkIfUpdate(newForecast).length > 1 ? 'Update Forecast' : 'New Forecast'}\nID: ${newForecast.forecast_id + '.' + newForecast.update_id}\nLOC: ${newForecast.epicenter_lat}, ${newForecast.epicenter_long} (+/-${newForecast.epicenter_confidence})\nMAG: ${newForecast.magnitude} (+/- ${newForecast.magnitude_confidence})\nWHEN: ${newForecast.event_time} (+/- ${newForecast.time_confidence})`)
+        await rwClient.v2.tweet({
+            text: `${checkIfUpdate(newForecast).length > 1 ? 'Update Forecast' : 'New Forecast'}\nID: ${newForecast.forecast_id + '.' + newForecast.update_id}\nLOC: ${newForecast.epicenter_lat}, ${newForecast.epicenter_long} (+/-${newForecast.epicenter_confidence})\nMAG: ${newForecast.magnitude} (+/- ${newForecast.magnitude_confidence})\nWHEN: ${newForecast.event_time} (+/- ${newForecast.time_confidence})`, 
+            media: { media_ids: [mediaId] }
+            })
 
-        console.log('tweet fired')
+        console.log('tweet with image fired')
     } catch (error) {
         console.log('ERROR: Unable to Tweet')
         console.log(error)

@@ -19,17 +19,19 @@ async function main() {
 
         if (comparisonResult.length == 0) {
             //add the data
-            addRawDataToDB(forecast);
+            await addRawDataToDB(forecast);
             console.log('forecast added to raw db')
-            addStructuredDataToDB(forecast);
+            await addStructuredDataToDB(forecast);
             console.log('forecast added to structured db')
 
             //create the map
-            createTweetMap(forecast.epicenter_lat, forecast.epicenter_long, forecast.forecast_id, forecast.update_id)
+            await createTweetMap(forecast.epicenter_lat, forecast.epicenter_long, forecast.forecast_id, forecast.update_id)
             console.log('forecast map tweet created')
 
             //do the tweeting
-            //createTweet(forecast)
+            await createTweet(forecast)
+
+
         }
         else {
             //already in the database
